@@ -91,17 +91,17 @@ public class CalculateAverage_tonivade {
         }
     }
 
-    private static int findChar(byte[] line, int offset, int c) {
+    private static int findChar(byte[] line, int offset, int target) {
         for (int i = offset; i < line.length; i++) {
-            if (line[i] == c) {
+            if (line[i] == target) {
                 return i;
             }
         }
         return -1;
     }
 
-    private static int findNextEndOfLine(ByteBuffer buffer, int last) {
-        for (int i = last; i < buffer.remaining(); i++) {
+    private static int findNextEndOfLine(ByteBuffer buffer, int offset) {
+        for (int i = offset; i < buffer.remaining(); i++) {
             if (buffer.get(i) == EOL) {
                 return i;
             }
@@ -145,9 +145,9 @@ public class CalculateAverage_tonivade {
 
         private final byte[] value;
 
-        SafeString(byte[] value, int offset, int length) {
-            this.value = new byte[length];
-            System.arraycopy(value, offset, this.value, 0, length);
+        SafeString(byte[] source, int offset, int length) {
+            value = new byte[length];
+            System.arraycopy(source, offset, value, 0, length);
         }
 
         @Override
@@ -198,11 +198,11 @@ public class CalculateAverage_tonivade {
         }
 
         private double mean() {
-            return round(this.sum) / this.count;
+            return round(sum) / count;
         }
 
         private double round(double value) {
-            return Math.round(value * 10.0) / 10.0;
+            return Math.round(value * 10.) / 10.;
         }
     }
 }
